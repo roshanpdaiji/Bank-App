@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Page</title>
+    <link rel="icon" href="https://cdn3.vectorstock.com/i/1000x1000/66/82/bank-transaction-icon-vector-7316682.jpg" type="image/x-icon">  <!-- Update this link -->
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</head>
+<style>
+
+nav {
+    position: sticky;  /* Makes the navbar sticky */
+    top: 0;            /* Sticks it to the top of the page */
+    background-color: white; /* Optional: Set a background color */
+    z-index: 1000;     /* Ensures it stays above other content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow for depth */
+}
+
+.row {
+    display: flex;  /* Ensure the row is a flex container */
+    justify-content: space-between;  /* Space out the columns */
+    padding: 10px;  /* Optional: Add some padding */
+}
+
+.top-left-menu h2 {
+    margin: 0;      /* Remove default margin */
+    cursor: pointer; /* Change cursor to pointer for interaction */
+}
+
+
+
+.top-left-menu {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    align-items: flex-start; /* Align items to the top */
+    gap: 20px; /* Adjust spacing between the items */
+    position: absolute; /* Positioned relative to the parent */
+    top: 0;
+    left: 0;
+    padding: 10px; /* Optional padding */
+}
+
+.top-left-menu h2 {
+    margin: 0;
+    font-size: 16px; /* Adjust font size as per your need */
+    position: relative; /* Positioning for the text */
+    padding: 10px 0; /* Space for the line */
+    overflow: hidden; /* Hide overflow */
+}
+
+.top-left-menu h2::after {
+    content: ''; /* Empty content for the line */
+    position: absolute;
+    left: 50%; /* Center the line initially */
+    bottom: 0; /* Position at the bottom of the h2 */
+    width: 0; /* Initial width */
+    height: 2px; /* Line height */
+    background-color: black; /* Line color */
+    transition: width 0.3s ease, left 0.3s ease; /* Animation on hover */
+}
+
+.top-left-menu h2:hover::after {
+    width: 100%; /* Full width on hover */
+    left: 0; /* Move to left end */
+}
+
+.logout-container {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: flex-end; /* Align to the right */
+    margin-left: 50px; /* Add left margin */
+    margin-top: 5px;
+}
+
+.logout-btn {
+    padding: 10px 20px; /* Adjust button padding */
+    border-radius: 5px; /* Rounded corners */
+    color: #fff; /* Text color */
+    background-color: #343a40; /* Button background color */
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth background color change */
+}
+
+.logout-btn:hover {
+    background-color: #495057; /* Darker background on hover */
+}
+
+ 
+  
+
+
+    /*Headline*/
+    .headline {
+        display: flex;
+        flex-direction: column; /* Stack the h1 and h2 vertically */
+        justify-content: center; /* Center vertically */
+        align-items: center; /* Center horizontally */
+        padding-top: px; /* Add 100px padding from the top */
+        text-align: center; /* Center text inside */
+        background-color: black; /* Set background color to black */
+        color: white; /* Set text color to white */
+        margin-top: 50px;
+        margin-bottom: 50px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .headline h1, .headline h2 {
+        margin: 0; /* Remove default margin */
+    }
+
+    /*Transaction*/
+   
+
+    .transaction {
+        padding: 20px; /* Add padding to the transaction section */
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Space between columns */
+    }
+
+    .col-6 {
+        flex: 1 1 100%;
+        max-width: 100%;
+        padding: 20px; /* Padding around each column */
+    }
+
+    @media (min-width: 768px) {
+        .col-6 {
+            flex: 1 1 45%;
+            max-width: 45%;
+        }
+    }
+
+    .transaction-box {
+        border: 5px solid #ccc;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 20px; /* Equal padding inside each transaction box */
+        margin-left: 40px;
+        position: relative;
+        min-height: 300px; /* Optional: Ensure enough height for button positioning */
+    }
+
+    .transaction-title {
+        margin-bottom: 20px; /* Spacing below the title */
+        text-align: center; /* Center aligns the title */
+    }
+
+    .form-control {
+        margin-bottom: 15px; /* Spacing between form fields */
+    }
+
+    .transaction-btn {
+        display: block; /* Makes the button a block element */
+        margin: 10px auto; /* Centers the button horizontally */
+        padding-top: 10px; /* Set only top padding to 10px */
+        padding-left: 20px; /* Optional: Add left padding for better button appearance */
+        padding-right: 20px; /* Optional: Add right padding for better button appearance */
+        padding-bottom: 10px; /* Optional: Keep bottom padding consistent */
+    }
+
+
+    /* Container for the boxes */
+.box {
+    width: 50%; /* Width is half of the center portion */
+    padding: 20px; /* Padding inside the box */
+    border: 1px solid #ccc; /* Border for the box */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for the box */
+    margin: 20px 0; /* Margin between boxes */
+    background-color: #f8f9fa; /* Light background */
+}
+
+/* Centering the box */
+.container {
+    display: flex;
+    flex-direction: column; /* Stack the boxes vertically */
+    align-items: flex-start; /* Aligns the boxes to the left */
+    padding: 20px; /* Padding around the container */
+}
+
+/*Balance*/
+
+.box{
+    margin-left: 50px;
+    margin-bottom: 50px;
+    margin-top: 30px;
+}
+
+.normal-button {
+    padding: 10px 20px; /* Adjust padding for normal size */
+    font-size: 16px; /* Set font size */
+    border: 1px solid #007bff; /* Match Bootstrap primary color */
+    background-color: #730c75; /* Match Bootstrap primary background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 4px; /* Rounded corners */
+}
+
+.normal-button:hover {
+    background-color: #140701; /* Darken background on hover */
+    border-color: #0056b3; /* Darken border on hover */
+}
+
+
+
+
+    /*Connect*/
+
+    .contact {
+    padding: 20px; /* Add padding around the contact section */
+    background-color: #f8f9fa; /* Light background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 600px; /* Max width for better alignment */
+    margin: 0 auto; /* Center the section */
+    margin-bottom: 30px;
+}
+
+.contact-title {
+    text-align: center; /* Center title */
+    margin-bottom: 20px; /* Space below title */
+    font-size: 24px; /* Title size */
+    color: #343a40; /* Dark color for text */
+}
+
+.form-label {
+    font-weight: bold; /* Make labels bold */
+}
+
+.form-control {
+    border-radius: 4px; /* Rounded borders for inputs */
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1); /* Inner shadow for inputs */
+}
+
+textarea.form-control {
+    height: auto; /* Set height to auto */
+    resize: none; /* Disable resizing */
+}
+
+.btn-primary {
+    width: 100%; /* Full-width button */
+    padding: 8px; /* Adjust button padding */
+    border-radius: 4px; /* Rounded button */
+}
+
+
+/*Footer*/
+
+
+.footer {
+    background-color: #343a40; /* Dark background color */
+    color: white; /* White text */
+    padding: 20px 0; /* Top and bottom padding */
+    position: relative; /* Ensure footer stays at the bottom */
+    width: 100%; /* Full width */
+    text-align: center; /* Center all text inside the footer */
+}
+
+.footer .container {
+    max-width: 1200px; /* Optional: Max width for the footer content */
+    margin: 0 auto; /* Center the container */
+    padding: 0 15px; /* Optional: Padding for the container */
+}
+
+.footer .quick-links {
+    margin-top: 10px; /* Space between the text and links */
+}
+
+.footer a {
+    color: white; /* White link color */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.footer a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+
+
+
+</style>
+<body>
+    
+
+    <!--Nav Bar-->
+
+    <nav>
+        <div class="row">
+            <div class="col-3 top-left-menu">
+                <h2>Home</h2>
+                <h2>Features</h2>
+                <h2>Pricing</h2>
+                <h2>About</h2>
+            </div>
+    
+            <div class="col-6"></div>
+            <div class="col-3"></div>
+            <div class="col-2">
+                <div class="logout-container">
+                    <button type="button" class="btn btn-dark logout-btn" onclick="window.location.href='index.html'">
+                        <i class="fa-solid fa-right-from-bracket" style="color: #eef0f3;"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+
+
+    <!--Headline-->
+
+    <section class="headline">
+        <h1 id="welcomeMessage">Welcome User</h1>
+        <h2>Online Banking </h2>
+    </section>
+
+    
+
+<!-- Transaction Section -->
+<section class="transaction">
+    <div class="row">
+        <!-- Deposit Section -->
+        <div class="col-6 transaction-box">
+            <h2 class="transaction-title">Deposit</h2>
+            <form id="depositForm">
+                <div class="mb-3">
+                    <label for="depositAccNo" class="form-label">Account Number</label>
+                    <input type="text" class="form-control" id="depositAccNo" placeholder="Enter account number" required>
+                </div>
+                <div class="mb-3">
+                    <label for="depositAmount" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="depositAmount" placeholder="Enter deposit amount" required>
+                </div>
+                <button type="submit" class="btn btn-success transaction-btn">Deposit</button>
+            </form>
+        </div>
+
+        <!-- Withdrawal Section -->
+        <div class="col-6 transaction-box">
+            <h2 class="transaction-title">Withdrawal</h2>
+            <form id="withdrawForm">
+                <div class="mb-3">
+                    <label for="withdrawAccNo" class="form-label">Account Number</label>
+                    <input type="text" class="form-control" id="withdrawAccNo" placeholder="Enter account number" required>
+                </div>
+                <div class="mb-3">
+                    <label for="withdrawAmount" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="withdrawAmount" placeholder="Enter withdrawal amount" required>
+                </div>
+                <button type="submit" class="btn btn-danger transaction-btn">Withdraw</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<!--Balance -->
+
+
+<div class="box">
+    <h3>Check Balance</h3>
+    <form id="balanceCheckForm" onsubmit="checkBalance(); return false;">
+        <div class="mb-3">
+            <label for="checkAccNo" class="form-label">Account Number</label>
+            <input type="text" class="form-control" id="checkAccNo" placeholder="Enter your account number" required>
+        </div>
+        <button type="submit" class="normal-button">Check Balance</button>
+    </form>
+    <div id="balanceMessage" style="margin-top: 20px; font-weight: bold;"></div>
+</div>
+
+
+    <!--Connect-->
+
+    <section class="contact">
+        <h2 class="contact-title">Contact Us</h2>
+        <form>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="col-12 mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" rows="1" placeholder="Enter your message" required></textarea>
+                </div>
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
+            </div>
+        </form>
+    </section>
+    
+
+    
+
+    <!--Footer-->
+
+    <footer class="footer">
+        <div class="text-center">
+            <p>&copy; 2024 My Bank. All rights reserved.</p>
+            <p>Contact us: <a href="mailto:info@yourbank.com">info@mybank.com</a></p>
+            <div class="quick-links">
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a> | 
+                <a href="#">Help</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+
+        // Retrieve the username and account number from local storage
+const username = localStorage.getItem('username');
+const accountNumber = localStorage.getItem('accountNumber');
+
+// If a username exists, update the welcome message
+if (username) {
+    document.getElementById('welcomeMessage').textContent = `Welcome ${username}`;
+}
+
+// Initialize balance in local storage if it doesn't exist
+if (!localStorage.getItem('balance')) {
+    localStorage.setItem('balance', JSON.stringify({ balance: 0 }));
+}
+
+// Function to format amount to Indian Rupees
+function formatCurrency(amount) {
+    return `₹${amount.toLocaleString('en-IN')}`;
+}
+
+// Deposit Function
+document.getElementById('depositForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent form from submitting normally
+
+    const depositAccNo = document.getElementById('depositAccNo').value;
+    const depositAmount = parseFloat(document.getElementById('depositAmount').value);
+
+    // Validate input
+    if (!depositAccNo || depositAccNo !== accountNumber || isNaN(depositAmount) || depositAmount <= 0) {
+        alert("Please enter a valid account number that matches your registered account and a valid amount.");
+        return;
+    }
+
+    // Update balance
+    const currentBalance = JSON.parse(localStorage.getItem('balance'));
+    currentBalance.balance += depositAmount;
+
+    // Store updated balance
+    localStorage.setItem('balance', JSON.stringify(currentBalance));
+
+    // Alert user
+    alert(`Deposit successful!\nAdded Amount: ${formatCurrency(depositAmount)}\nNew Balance: ${formatCurrency(currentBalance.balance)}`);
+
+    // Clear form fields
+    document.getElementById('depositForm').reset();
+});
+
+// Withdrawal Function
+document.getElementById('withdrawForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent form from submitting normally
+
+    const withdrawAccNo = document.getElementById('withdrawAccNo').value;
+    const withdrawAmount = parseFloat(document.getElementById('withdrawAmount').value);
+
+    // Validate input
+    if (!withdrawAccNo || withdrawAccNo !== accountNumber || isNaN(withdrawAmount) || withdrawAmount <= 0) {
+        alert("Please enter a valid account number that matches your registered account and a valid amount.");
+        return;
+    }
+
+    const currentBalance = JSON.parse(localStorage.getItem('balance'));
+
+    // Check if sufficient balance is available
+    if (withdrawAmount > currentBalance.balance) {
+        alert("Insufficient funds for withdrawal.");
+        return;
+    }
+
+    // Update balance
+    currentBalance.balance -= withdrawAmount;
+
+    // Store updated balance
+    localStorage.setItem('balance', JSON.stringify(currentBalance));
+
+    // Alert user
+    alert(`Withdrawal successful!\nWithdrawn Amount: ${formatCurrency(withdrawAmount)}\nNew Balance: ${formatCurrency(currentBalance.balance)}`);
+
+    // Clear form fields
+    document.getElementById('withdrawForm').reset();
+});
+
+function checkBalance() {
+    // Get the account number input
+    const accountNumberInput = document.getElementById('checkAccNo').value;
+    
+    // Retrieve the stored account number and balance from local storage
+    const storedAccountNumber = localStorage.getItem('accountNumber');
+    const currentBalance = JSON.parse(localStorage.getItem('balance'));
+
+    // Check if the input account number matches the stored account number
+    if (accountNumberInput !== storedAccountNumber) {
+        alert("Incorrect account number. Please try again.");
+    } else {
+        // Display the balance
+        const balanceMessage = document.getElementById('balanceMessage');
+        balanceMessage.textContent = `Your current balance is: ₹${currentBalance.balance.toLocaleString('en-IN')}`;
+    }
+}
+
+
+
+
+    </script>
+          
+</body>
+</html>
